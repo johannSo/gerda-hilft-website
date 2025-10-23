@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Mail } from "lucide-react";
+import ThemeToggle from "@/components/ThemeToggle";
 
 const Header = () => {
   const scrollToSection = (id: string) => {
@@ -39,13 +40,16 @@ const Header = () => {
             </button>
           </nav>
 
-          <Button 
-            onClick={() => scrollToSection("contact")}
-            className="bg-primary hover:bg-accent transition-colors"
-          >
-            <Mail className="mr-2 h-4 w-4" />
-            Kontakt
-          </Button>
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
+            <Button 
+              onClick={() => scrollToSection("contact")}
+              className="bg-primary hover:bg-accent transition-colors"
+            >
+              <Mail className="mr-2 h-4 w-4" />
+              Kontakt
+            </Button>
+          </div>
         </div>
       </div>
     </header>
