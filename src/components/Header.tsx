@@ -1,9 +1,18 @@
 import { Button } from "@/components/ui/button";
-import { Mail } from "lucide-react";
+import { Mail, Cloud } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
 import ThemeToggle from "@/components/ThemeToggle";
 
 const Header = () => {
+  const location = useLocation();
+  
   const scrollToSection = (id: string) => {
+    // If we're not on the home page, navigate to home first
+    if (location.pathname !== '/') {
+      window.location.href = `/#${id}`;
+      return;
+    }
+    
     const element = document.getElementById(id);
     element?.scrollIntoView({ behavior: "smooth" });
   };
@@ -12,12 +21,14 @@ const Header = () => {
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-sm border-b border-border">
       <div className="container mx-auto px-4 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center">
-              <span className="text-white font-bold text-lg">G</span>
-            </div>
+          <Link to="/" className="flex items-center space-x-2 hover:opacity-80 transition-opacity">
+            <img 
+              src="/logo.png" 
+              alt="Gerda Hilft Logo" 
+              className="w-8 h-8 rounded-lg object-contain"
+            />
             <span className="font-semibold text-lg">Gerda Hilft</span>
-          </div>
+          </Link>
           
           <nav className="hidden md:flex items-center space-x-6">
             <button 
@@ -26,6 +37,12 @@ const Header = () => {
             >
               Leistungen
             </button>
+            <Link 
+              to="/cloud-pricing"
+              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+            >
+              Cloud Preise
+            </Link>
             <button 
               onClick={() => scrollToSection("about")} 
               className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
@@ -42,6 +59,14 @@ const Header = () => {
 
           <div className="flex items-center gap-2">
             <ThemeToggle />
+            <Link 
+              to="/cloud-pricing"
+              className="md:hidden"
+            >
+              <Button variant="outline" size="sm">
+                <Cloud className="h-4 w-4" />
+              </Button>
+            </Link>
             <Button 
               onClick={() => scrollToSection("contact")}
               className="bg-primary hover:bg-accent transition-colors"
